@@ -1,0 +1,114 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/Poppins-Light.ttf");
+}
+body {
+  font-family: 'Poppins', cursive;
+}
+.App {
+  background-color: #000;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.hamburger {
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  transition: all 0.25s;
+}
+
+.hamburger__top-bun,
+.hamburger__middle-bun,
+.hamburger__bottom-bun {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.hamburger:hover [class*="-bun"] {
+  background: #fff;
+}
+
+.hamburger__top-bun {
+  transform: translateY(-10px);
+}
+
+.hamburger__middle-bun {
+  transform: translateY(-3px);
+}
+
+.hamburger__bottom-bun {
+  transform: translateY(4px);
+}
+
+.open {
+  transform: rotate(90deg);
+  transform: translateY(-1px);
+}
+
+.open .hamburger__top-bun {
+  transform: rotate(45deg) translateY(0px);
+}
+
+.open .hamburger__bottom-bun {
+  transform: rotate(-45deg) translateY(0px);
+}
+
+.open .hamburger__middle-bun {
+  display: none;
+}
+
+.open-transform {
+  transition: all 0.5s;
+  transition-delay: 1s;
+  border-bottom: 1px solid #fff;
+}
+
+.footer::before {
+  background-color: #fff;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  vertical-align: middle;
+  width: 100vw;
+  z-index: 0;
+}
+
+@media(max-width:850px) {
+  .footer::before {
+   display: none;
+  } 
+}
+
+.nav-link a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.close{
+  cursor: pointer;
+	position: absolute;
+	top: 25px;
+	right: 25px;
+}
+
+.close div {
+	height: 3px;
+	width: 24px;
+	background-color: rgb(177, 177, 177);
+	margin: 4px 0;
+	transition: all 0.3s ease;
+}
+.line1 {
+	transform: rotate(-45deg) translate(-5px, 6px);
+}
+.line2 {
+	transform: rotate(45deg) translate(1px, 0px);
+}

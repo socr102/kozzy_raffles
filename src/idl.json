@@ -1,0 +1,377 @@
+
+{
+    "version": "0.1.0",
+    "name": "raffle",
+    "instructions": [
+      {
+        "name": "initializeVault",
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "vaultAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      },
+      {
+        "name": "initializeEntrant",
+        "accounts": [
+          {
+            "name": "owner",
+            "isMut": true,
+            "isSigner": true
+          },
+          {
+            "name": "entrantAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "systemProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      },
+      {
+        "name": "createRaffle",
+        "accounts": [
+          {
+            "name": "vaultAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "entrantAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "owner",
+            "isMut": true,
+            "isSigner": true
+          }
+        ],
+        "args": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "type": "string"
+          },
+          {
+            "name": "discord",
+            "type": "string"
+          },
+          {
+            "name": "twitter",
+            "type": "string"
+          },
+          {
+            "name": "endTimestamp",
+            "type": "i64"
+          },
+          {
+            "name": "ticketPrice",
+            "type": "string"
+          },
+          {
+            "name": "collection",
+            "type": "u32"
+          }
+        ]
+      },
+      {
+        "name": "buyTickets",
+        "accounts": [
+          {
+            "name": "vaultAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "entrantAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "proceeds",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "buyerTokenAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "buyerTransferAuthority",
+            "isMut": false,
+            "isSigner": true
+          },
+          {
+            "name": "tokenProgram",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "amount",
+            "type": "u32"
+          }
+        ]
+      },
+      {
+        "name": "revealWinners",
+        "accounts": [
+          {
+            "name": "vaultAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "entrantAccount",
+            "isMut": true,
+            "isSigner": false
+          },
+          {
+            "name": "recentBlockhashes",
+            "isMut": false,
+            "isSigner": false
+          }
+        ],
+        "args": [
+          {
+            "name": "raffleIndex",
+            "type": "u32"
+          }
+        ]
+      }
+    ],
+    "accounts": [
+      {
+        "name": "Entrants",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "entrants",
+              "type": {
+                "vec": {
+                  "defined": "Ticket"
+                }
+              }
+            },
+            {
+              "name": "bump",
+              "type": "u8"
+            }
+          ]
+        }
+      },
+      {
+        "name": "VaultAccount",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "owner",
+              "type": "publicKey"
+            },
+            {
+              "name": "totalRaffles",
+              "type": "u32"
+            },
+            {
+              "name": "raffles",
+              "type": {
+                "vec": {
+                  "defined": "Raffle"
+                }
+              }
+            },
+            {
+              "name": "bump",
+              "type": "u8"
+            }
+          ]
+        }
+      }
+    ],
+    "types": [
+      {
+        "name": "Ticket",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "index",
+              "type": "u32"
+            },
+            {
+              "name": "ticket",
+              "type": "u32"
+            },
+            {
+              "name": "publicKey",
+              "type": "publicKey"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Raffle",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "index",
+              "type": "u32"
+            },
+            {
+              "name": "creator",
+              "type": "publicKey"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "image",
+              "type": "string"
+            },
+            {
+              "name": "discord",
+              "type": "string"
+            },
+            {
+              "name": "twitter",
+              "type": "string"
+            },
+            {
+              "name": "randomness",
+              "type": {
+                "option": {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                }
+              }
+            },
+            {
+              "name": "endTimestamp",
+              "type": "i64"
+            },
+            {
+              "name": "ticketPrice",
+              "type": "u64"
+            },
+            {
+              "name": "collection",
+              "type": "u32"
+            },
+            {
+              "name": "ticketIndex",
+              "type": "u32"
+            },
+            {
+              "name": "winner",
+              "type": {
+                "defined": "Ticket"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": 6000,
+        "name": "EntrantsAccountTooSmallForMaxEntrants",
+        "msg": "Entrants account too small for max entrants"
+      },
+      {
+        "code": 6001,
+        "name": "RaffleEnded",
+        "msg": "Raffle has ended"
+      },
+      {
+        "code": 6002,
+        "name": "InvalidCalculation",
+        "msg": "Invalid calculation"
+      },
+      {
+        "code": 6003,
+        "name": "NotEnoughTicketsLeft",
+        "msg": "Not enough tickets left"
+      },
+      {
+        "code": 6004,
+        "name": "RaffleStillRunning",
+        "msg": "Raffle is still running"
+      },
+      {
+        "code": 6005,
+        "name": "WinnersAlreadyDrawn",
+        "msg": "Winner already drawn"
+      },
+      {
+        "code": 6006,
+        "name": "WinnerNotDrawn",
+        "msg": "Winner not drawn"
+      },
+      {
+        "code": 6007,
+        "name": "UnclaimedPrizes",
+        "msg": "Unclaimed prizes"
+      },
+      {
+        "code": 6008,
+        "name": "NoTicket",
+        "msg": "There is no ticket"
+      },
+      {
+        "code": 6009,
+        "name": "InvalidVault",
+        "msg": "The provided vault does not match the owner account"
+      },
+      {
+        "code": 6010,
+        "name": "InvalidOwner",
+        "msg": "Thi user can't create a new raffle"
+      }
+    ],
+    "metadata": {
+        "address": "uViezTZ7Ly52CwW4p2ypdHin1EVZ8v71Kfrp7rW6HNJ"
+    }
+  }

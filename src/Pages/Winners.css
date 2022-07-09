@@ -1,0 +1,24 @@
+.winner_list table {
+    overflow: auto;
+    overflow-x: hidden;
+    height: 420px;
+}
+.winner_list thead tr th:nth-child(1)  {
+    padding-right: 470px;
+}
+/* .winner_list tbody tr td:nth-child(3) {
+    padding-left: 50px;
+} */
+.winner_list thead tr {
+    border-bottom: 1px solid #fff;
+}
+@media (max-width:750px) {
+    .winner_list {
+        width: 90%;
+        margin-top: 40px;
+    }
+
+    .winner_list table {
+        overflow-x: auto;
+    }
+}
